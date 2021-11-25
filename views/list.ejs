@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/write">write</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/list">list</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <h4 class="ml-2 my-3">서버에서 가져온 할 일</h4>
+    <ul class="list-group">
+        <% for (var i=0; i < posts.length; i++){ %>
+            <li class="list-group-item">
+                <p>글번호 : <%= posts[i]._id %>
+                </p>
+                <h4>
+                    <a href="/detail/<%= posts[i]._id %>">
+
+                        할일 제목 : <%= posts[i].title %>
+
+                    </a>
+
+                </h4>
+                <p> 할일 마감날짜 : <%= posts[i].date %>
+                </p>
+                <button data-id="<%= posts[i]._id %>" class=" delete btn btn-danger">삭제</button>
+                <button data-id="<%= posts[i]._id %>" class=" edit btn btn-light">
+                    <a href="/edit/ <%= posts[i]._id%>">수정</a></button>
+            </li>
+            <% } %>
+    </ul>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+    $(".delete").click(function (e) {
+        var clicked = e.target.dataset.id;
+        var nowclick = $(this);
+        $.ajax({
+            method: 'DELETE',
+            url: '/delete',
+            data: { _id: clicked }
+        }).done(function (결과) {
+            nowclick.parent('li').fadeOut();
+        }).fail(function () {
+        });
+
+    })
+
+
+
+</script>
+
+</html>
