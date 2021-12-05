@@ -1,2 +1,2 @@
 # CRUD_study
-node.js mongoDB를 연동해 CRUD 개념공부
+node.js mongoDB를 연동해  ejs에 출력 / CRUD 과정을 공부함
